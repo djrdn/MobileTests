@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+def allureVersion = "2.19.0"
+def junitVersion = "5.8.2"
+def slf4jVersion = "1.7.32"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Selenide for UI automation
+    testImplementation "com.codeborne:selenide:5.25.0"
+
+    // Allure reporting
+    testImplementation "io.qameta.allure:allure-junit5:$allureVersion"
+    testImplementation "io.qameta.allure:allure-selenide:$allureVersion"
+
+    // Appium client
+    testImplementation "io.appium:java-client:7.6.0"
+
+    // ADB settings
+    testImplementation "org.aeonbits.owner:owner:1.0.12"
+
+    // REST API testing
+    testImplementation "io.rest-assured:rest-assured:4.4.0"
+
+    // Image comparison
+    testImplementation "com.github.romankh3:image-comparison:4.4.0"
+
+    // JUnit 5
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+
+    // SLF4J logging
+    testRuntimeOnly "org.slf4j:slf4j-simple:$slf4jVersion"
+}
+
+test {
+    useJUnitPlatform()
+}
