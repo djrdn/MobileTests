@@ -2,6 +2,7 @@ package driver;
 
 import com.codeborne.selenide.WebDriverProvider;
 import config.ConfigReader;
+import helper.ApkInfoHelper;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import javax.annotation.Nonnull;
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -21,7 +23,7 @@ public class EmulatorDriver  implements WebDriverProvider {
     private static String APP_PACKAGE = ConfigReader.emulatorConfig.appPackage();
     private static String APP_ACTIVITY = ConfigReader.emulatorConfig.appActivity();
     private static final String APP = ConfigReader.emulatorConfig.app();
-    private static final String URL = ConfigReader.emulatorConfig.remoteURL();
+    private static final String REMOTE_URL = ConfigReader.emulatorConfig.remoteURL();
 
     /**
      * Валидация URL ссылки из пропертей
@@ -29,7 +31,7 @@ public class EmulatorDriver  implements WebDriverProvider {
      */
     public static URL getUrl() {
         try {
-            return new URL(URL);
+            return new URL(REMOTE_URL);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -50,12 +52,12 @@ public class EmulatorDriver  implements WebDriverProvider {
     /**
      * Получаем AppPackage и AppActivity из чтения apk файла
      */
-//    private void initPackageAndActivity() {
-//        ApkInfoHelper helper = new ApkInfoHelper();
-//        //тернарное условие, если app_package не задано в пропертях, достаем из из apk
-//        APP_PACKAGE = APP_PACKAGE.isEmpty() ? helper.getAppPackageFromApk() : APP_PACKAGE;
-//        APP_ACTIVITY = APP_ACTIVITY.isEmpty() ? helper.getAppMainActivity() : APP_ACTIVITY;
-//    }
+    private void initPackageAndActivity() {
+        ApkInfoHelper helper = new ApkInfoHelper();
+        //тернарное условие, если app_package не задано в пропертях, достаем из из apk
+        APP_PACKAGE = APP_PACKAGE.isEmpty() ? helper.getAppPackageFromApk() : APP_PACKAGE;
+        APP_ACTIVITY = APP_ACTIVITY.isEmpty() ? helper.getAppMainActivity() : APP_ACTIVITY;
+    }
 
 
     /**
